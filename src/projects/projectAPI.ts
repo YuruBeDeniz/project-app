@@ -63,23 +63,28 @@ const projectAPI = {
         );
       });
   },
-  async put(project: Project) {
-    try {
-      const response = await fetch(`${url}/${project.id}`, {
-        method: 'PUT',
-        body: JSON.stringify(project),
-        headers: {
-          'Content-Type': 'application/json'
-        }
+  put(project: Project) {
+    return fetch(`${url}/${project.id}`, {
+      method: 'PUT',
+      body: JSON.stringify(project),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(checkStatus)
+      .then(parseJSON)
+      .catch((error: TypeError) => {
+        console.log('log client error ' + error);
+        throw new Error(
+          'There was an error updating the project. Please try again.'
+        );
       });
-      const response_1 = await checkStatus(response);
-      return parseJSON(response_1);
-    } catch (error) {
-      console.log('log client error ' + error);
-      throw new Error(
-        'There was an error updating the project. Please try again.'
-      );
-    }
+  },
+  find(id: number) {
+    return fetch(`${url}/${id}`)
+      .then(checkStatus)
+      .then(parseJSON)
+      .then(convertToProjectModel)
   },
 };
 
