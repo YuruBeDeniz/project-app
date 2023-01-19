@@ -1,9 +1,14 @@
 import ProjectsPage from "./projects/ProjectsPage";
+import { BrowserRouter as Router, Routes, Route, NavLink } from "react-router-dom";
+import HomePage from "./home/HomePage";
 
 function App() {
   return (
     <div className="container">
-      <ProjectsPage />
+      <Routes>
+      <Route path='/' element={<HomePage />} />
+      <Route path='/projects' element={<ProjectsPage />} />
+      </Routes>
     </div>
   );
 }
